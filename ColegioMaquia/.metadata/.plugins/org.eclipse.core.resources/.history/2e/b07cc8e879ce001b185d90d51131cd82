@@ -1,0 +1,16 @@
+package mapa.cuadro.bloques;
+
+import graficos.Pantalla;
+import graficos.Sprite;
+import mapa.cuadro.Cuadro;
+
+public class CuadroCbstone extends Cuadro {
+
+	public CuadroCbstone(Sprite sprite) {
+		super(sprite);
+	}
+
+	public void mostrar(int x, int y, Pantalla pantalla) {
+		pantalla.mostrarCuadro(x << 5, y << 5, this);
+	}
+}

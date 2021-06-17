@@ -1,0 +1,31 @@
+package mapa.cuadro;
+
+import graficos.Pantalla;
+import graficos.Sprite;
+import mapa.cuadro.bloques.CuadroStone;
+
+public abstract class Cuadro {
+	public int x;
+	public int y;
+
+	public Sprite sprite;
+
+	// colección cuadros
+	public static final Cuadro STONE = new CuadroStone(Sprite.STONE);
+	public static final Cuadro GRASS = new CuadroStone(Sprite.GRASS);
+	public static final Cuadro SAND = new CuadroStone(Sprite.SAND);
+	public static final Cuadro WOOD = new CuadroStone(Sprite.WOOD);
+	public static final Cuadro CBSTONE = new CuadroStone(Sprite.CBSTONE);
+	// fin colección
+
+	public Cuadro(Sprite sprite) {
+		this.sprite = sprite;
+	}
+
+	public void mostrar(int x, int y, Pantalla pantalla) {
+	}
+
+	public boolean solido() {
+		return false;
+	}
+}

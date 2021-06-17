@@ -1,0 +1,19 @@
+package mapa.bloque;
+
+import graficos.Pantalla;
+import graficos.Sprite;
+
+public class Bloque {
+	public int x;
+	public int y;
+
+	public Sprite sprite;
+
+	public Bloque(Sprite sprite) {
+		this.sprite = sprite;
+	}
+
+	public void mostrar(int x, int y, Pantalla pantalla) {
+		
+	}
+}

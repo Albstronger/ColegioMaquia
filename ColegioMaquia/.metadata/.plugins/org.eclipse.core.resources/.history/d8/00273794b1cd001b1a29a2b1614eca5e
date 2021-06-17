@@ -1,0 +1,9 @@
+package graficos;
+
+public class HojaSprites {
+	public final int[] pixeles;
+
+	public HojaSprites() {
+
+	}
+}

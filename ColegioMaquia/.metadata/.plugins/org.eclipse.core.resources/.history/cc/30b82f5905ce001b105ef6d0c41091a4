@@ -1,0 +1,16 @@
+package mapa.cuadro.bloques;
+
+import graficos.Pantalla;
+import graficos.Sprite;
+import mapa.cuadro.Cuadro;
+
+public class CuadroGrass extends Cuadro {
+
+	public CuadroGrass(Sprite sprite) {
+		super(sprite);
+	}
+
+	public void mostrar(int x, int y, Pantalla pantalla) {
+		pantalla.mostrarCuadro(x, y, GRASS);
+	}
+}

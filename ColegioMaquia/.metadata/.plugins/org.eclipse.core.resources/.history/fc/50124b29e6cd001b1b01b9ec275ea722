@@ -1,0 +1,36 @@
+package mapa;
+
+public class Mapa {
+	private int ancho;
+	private int alto;
+
+	private int[] cuadros;
+
+	public Mapa(final int ancho, final int alto) {
+		this.ancho = ancho;
+		this.alto = alto;
+
+		cuadros = new int[ancho * alto];
+		generarMapa();
+	}
+
+	public Mapa(final String ruta) {
+		cargarMapa(ruta);
+	}
+
+	private void generarMapa() {
+
+	}
+
+	private void cargarMapa(String ruta) {
+
+	}
+	
+	public void actualizar(int compensacionX, int compensacionY, Pantalla pantalla) {
+		
+	}
+	
+	public void mostrar() {
+		
+	}
+}
