@@ -15,7 +15,7 @@ public final class Sprite {
 	public static final Sprite STONE = new Sprite(32, 0, 0, 0, HojaSprites.BLOQUES);
 	public static final Sprite GRASS = new Sprite(32, 1, 0, 0, HojaSprites.BLOQUES);
 	public static final Sprite SAND = new Sprite(32, 2, 0, 0, HojaSprites.BLOQUES);
-	public static final Sprite WOOD = new Sprite(32, 3, 0, 2, HojaSprites.BLOQUES);
+	public static final Sprite WOOD = new Sprite(32, 3, 0, 0, HojaSprites.BLOQUES);
 	public static final Sprite CBSTONE = new Sprite(32, 4, 0, 0, HojaSprites.BLOQUES);
 	// fin colección
 
