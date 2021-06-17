@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import control.Teclado;
 import graficos.Pantalla;
 import mapa.Mapa;
+import mapa.MapaCargado;
 import mapa.MapaGenerado;
 
 public class Juego extends Canvas implements Runnable {
@@ -53,8 +54,9 @@ public class Juego extends Canvas implements Runnable {
 
 		pantalla = new Pantalla(ANCHO, ALTO);
 
-		mapa = new MapaGenerado(128, 128);
-
+		//mapa = new MapaGenerado(128, 128);
+		mapa = new MapaCargado("/mapas/mapaPrueba.png");
+		
 		teclado = new Teclado();
 		addKeyListener(teclado);
 
