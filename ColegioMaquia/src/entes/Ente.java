@@ -3,8 +3,8 @@ package entes;
 import mapa.Mapa;
 
 public abstract class Ente {
-	private int x;
-	private int y;
+	protected int x;
+	protected int y;
 
 	private boolean eliminado = false;
 
@@ -20,22 +20,6 @@ public abstract class Ente {
 
 	public void eliminar() {
 		eliminado = true;
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public void modificarX(final int desplazamientoX) {
-		x += desplazamientoX;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void modificarY(final int desplazamientoY) {
-		y += desplazamientoY;
 	}
 
 	public boolean estaEliminado() {

@@ -34,8 +34,8 @@ public abstract class Criatura extends Ente {
 		}
 
 		if (!estaEliminado()) {
-			modificarX(desplazamientoX);
-			modificarY(desplazamientoY);
+			x += desplazamientoX;
+			y += desplazamientoY;
 		}
 	}
 
