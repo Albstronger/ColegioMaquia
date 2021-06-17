@@ -1,17 +1,21 @@
 package entes.criaturas;
 
 import control.Teclado;
+import graficos.Pantalla;
+import graficos.Sprite;
 
 public class Jugador extends Criatura {
 
 	private Teclado teclado;
 
-	public Jugador(final Teclado teclado) {
+	public Jugador(final Teclado teclado, Sprite sprite) {
 		this.teclado = teclado;
+		this.sprite = sprite;
 	}
 
-	public Jugador(final Teclado teclado, int posicionX, int posicionY) {
+	public Jugador(final Teclado teclado, Sprite sprite, int posicionX, int posicionY) {
 		this.teclado = teclado;
+		this.sprite = sprite;
 		this.x = posicionX;
 		this.y = posicionY;
 	}
@@ -34,10 +38,23 @@ public class Jugador extends Criatura {
 		}
 
 		if (desplazamientoX != 0 || desplazamientoY != 0) {
+			if (direccion == 'n') {
+				sprite = Sprite.ARRIBA0;
+			}
+			if (direccion == 's') {
+				sprite = Sprite.ABAJO0;
+			}
+			if (direccion == 'o') {
+				sprite = Sprite.IZQUIERDA0;
+			}
+			if (direccion == 'e') {
+				sprite = Sprite.DERECHA0;
+			}
 			mover(desplazamientoX, desplazamientoY);
 		}
 	}
 
-	public void mostrar() {
+	public void mostrar(Pantalla pantalla) {
+		pantalla.mostrarJugador(x, y, this);
 	}
 }

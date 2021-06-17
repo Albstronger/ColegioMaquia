@@ -9,7 +9,7 @@ public final class Sprite {
 	public int[] pixeles;
 	private HojaSprites hoja;
 
-	// colección sprites
+	// colección sprites prueba
 	public static final Sprite VOID = new Sprite(32, 0x0099ff);
 
 	public static final Sprite STONE = new Sprite(32, 0, 0, 0, HojaSprites.BLOQUES);
@@ -18,6 +18,24 @@ public final class Sprite {
 	public static final Sprite WOOD = new Sprite(32, 3, 0, 0, HojaSprites.BLOQUES);
 	public static final Sprite CBSTONE = new Sprite(32, 4, 0, 0, HojaSprites.BLOQUES);
 	// fin colección
+
+	// colección sprites personajes
+	public static final Sprite ABAJO0 = new Sprite(32, 0, 0, 0, HojaSprites.JUGADOR);
+	public static final Sprite ABAJO1 = new Sprite(32, 0, 1, 0, HojaSprites.JUGADOR);
+	public static final Sprite ABAJO2 = new Sprite(32, 0, 2, 0, HojaSprites.JUGADOR);
+
+	public static final Sprite ARRIBA0 = new Sprite(32, 1, 0, 0, HojaSprites.JUGADOR);
+	public static final Sprite ARRIBA1 = new Sprite(32, 1, 1, 0, HojaSprites.JUGADOR);
+	public static final Sprite ARRIBA2 = new Sprite(32, 1, 2, 0, HojaSprites.JUGADOR);
+
+	public static final Sprite DERECHA0 = new Sprite(32, 2, 0, 0, HojaSprites.JUGADOR);
+	public static final Sprite DERECHA1 = new Sprite(32, 2, 1, 0, HojaSprites.JUGADOR);
+	public static final Sprite DERECHA2 = new Sprite(32, 2, 2, 0, HojaSprites.JUGADOR);
+
+	public static final Sprite IZQUIERDA0 = new Sprite(32, 3, 0, 0, HojaSprites.JUGADOR);
+	public static final Sprite IZQUIERDA1 = new Sprite(32, 3, 1, 0, HojaSprites.JUGADOR);
+	public static final Sprite IZQUIERDA2 = new Sprite(32, 3, 2, 0, HojaSprites.JUGADOR);
+	// fin coleccion
 
 	public Sprite(final int lado, final int color) {
 		this.lado = lado;

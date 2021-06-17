@@ -12,6 +12,7 @@ public class HojaSprites {
 
 	// colección hojas sprites
 	public static final HojaSprites BLOQUES = new HojaSprites("/texturas/bloques.png", 320, 320);
+	public static final HojaSprites JUGADOR = new HojaSprites("/texturas/jugador.png", 320, 320);
 	// fin colección
 
 	public HojaSprites(final String ruta, final int ancho, final int alto) {

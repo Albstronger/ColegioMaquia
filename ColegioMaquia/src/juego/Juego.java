@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import control.Teclado;
 import entes.criaturas.Jugador;
 import graficos.Pantalla;
+import graficos.Sprite;
 import mapa.Mapa;
 import mapa.MapaCargado;
 
@@ -57,7 +58,7 @@ public class Juego extends Canvas implements Runnable {
 
 		// mapa = new MapaGenerado(128, 128);
 		mapa = new MapaCargado("/mapas/mapaPrueba.png");
-		jugador = new Jugador(teclado);
+		jugador = new Jugador(teclado, Sprite.ABAJO0, 240, 240);
 
 		ventana = new JFrame(NOMBRE);
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -114,15 +115,16 @@ public class Juego extends Canvas implements Runnable {
 		}
 
 		// pantalla.limpiar();
-		mapa.mostrar(jugador.getX(), jugador.getY(), pantalla);
+		mapa.mostrar(jugador.getX() - pantalla.getAncho() / 2 + jugador.getSprite().getLado() / 2,
+				jugador.getY() - pantalla.getAlto() / 2 + jugador.getSprite().getLado() / 2, pantalla);
+		jugador.mostrar(pantalla);
 
 		System.arraycopy(pantalla.pixeles, 0, pixeles, 0, pixeles.length);
 
 		Graphics g = estrategia.getDrawGraphics();
 
 		g.drawImage(imagen, 0, 0, getWidth(), getHeight(), null);
-		g.setColor(Color.WHITE);
-		g.fillRect(ANCHO / 2, ALTO / 2, 32, 32);
+		g.setColor(Color.RED);
 		g.drawString(CONTADOR_APS, 10, 20);
 		g.drawString(CONTADOR_FPS, 10, 40);
 		g.drawString("X: " + jugador.getX(), 10, 60);
