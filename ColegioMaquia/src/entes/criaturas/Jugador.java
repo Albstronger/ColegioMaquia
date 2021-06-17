@@ -1,5 +1,5 @@
 package entes.criaturas;
 
-public class Jugador extends Criatura{
+public class Jugador extends Criatura {
 
 }

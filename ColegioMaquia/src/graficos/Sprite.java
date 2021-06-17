@@ -36,22 +36,22 @@ public final class Sprite {
 		this.x = columna * lado;
 		this.y = fila * lado;
 		this.hoja = hoja;
-		
+
 		cargarSprite(version);
 	}
 
 	public int getLado() {
 		return lado;
 	}
-	
+
 	private void cargarSprite(final int version) {
 		if (version == 0) {
 			cargaNormal();
-		}else {
+		} else {
 			cargaManipulada(version);
 		}
 	}
-	
+
 	private void cargaNormal() {
 		for (int y = 0; y < lado; y++) {
 			for (int x = 0; x < lado; x++) {
@@ -59,11 +59,11 @@ public final class Sprite {
 			}
 		}
 	}
-	
+
 	private void cargaManipulada(int version) {
 		int[] pixelesTemporales = iniciarPixelesTemporales();
-		
-		switch(version) {
+
+		switch (version) {
 		case 1:
 			invertirX(pixelesTemporales);
 			break;
@@ -88,9 +88,9 @@ public final class Sprite {
 		default:
 			cargaNormal();
 		}
-		
+
 	}
-	
+
 	private int[] iniciarPixelesTemporales() {
 		int[] pixelesTemporales = new int[lado * lado];
 		for (int y = 0; y < lado; y++) {
@@ -100,74 +100,74 @@ public final class Sprite {
 		}
 		return pixelesTemporales;
 	}
-	
-	//1
+
+	// 1
 	private void invertirX(int[] pixelesTemporales) {
 		int i = 0;
-		for(int y = 0; y < lado; y++) {
-			for(int x = lado - 1; x > -1; x--) {
+		for (int y = 0; y < lado; y++) {
+			for (int x = lado - 1; x > -1; x--) {
 				pixeles[i] = pixelesTemporales[x + y * lado];
 				i++;
 			}
 		}
 	}
-	
-	//2
+
+	// 2
 	private void invertirY(int[] pixelesTemporales) {
 		int i = 0;
-		for(int y = lado - 1; y > -1; y--) {
-			for(int x = 0; x < lado; x++) {
+		for (int y = lado - 1; y > -1; y--) {
+			for (int x = 0; x < lado; x++) {
 				pixeles[i] = pixelesTemporales[x + y * lado];
 				i++;
 			}
 		}
 	}
-	
-	//3
+
+	// 3
 	private void invertirXY(int[] pixelesTemporales) {
-		for(int i = 0; i < pixeles.length; i++) {
+		for (int i = 0; i < pixeles.length; i++) {
 			pixeles[i] = pixelesTemporales[pixelesTemporales.length - 1 - i];
 		}
 	}
-	
-	//4
+
+	// 4
 	private void rotar90I(int[] pixelesTemporales) {
 		int i = 0;
-		for(int x = lado - 1; x > -1; x--) {
-			for(int y = 0; y < lado; y++) {
+		for (int x = lado - 1; x > -1; x--) {
+			for (int y = 0; y < lado; y++) {
 				pixeles[i] = pixelesTemporales[x + y * lado];
 				i++;
 			}
 		}
 	}
-	
-	//5
+
+	// 5
 	private void rotar90D(int[] pixelesTemporales) {
 		int i = 0;
-		for(int x = 0; x < lado; x++) {
-			for(int y = lado - 1; y > -1; y--) {
+		for (int x = 0; x < lado; x++) {
+			for (int y = lado - 1; y > -1; y--) {
 				pixeles[i] = pixelesTemporales[x + y * lado];
 				i++;
 			}
 		}
 	}
-	
-	//6
+
+	// 6
 	private void rotar90IYI(int[] pixelesTemporales) {
 		int i = 0;
-		for(int x = 0; x < lado; x++) {
-			for(int y = 0; y < lado; y++) {
+		for (int x = 0; x < lado; x++) {
+			for (int y = 0; y < lado; y++) {
 				pixeles[i] = pixelesTemporales[x + y * lado];
 				i++;
 			}
 		}
 	}
-	
-	//7
+
+	// 7
 	private void rotar90DYI(int[] pixelesTemporales) {
 		int i = 0;
-		for(int x = lado - 1; x > -1; x--) {
-			for(int y = lado - 1; y > -1; y--) {
+		for (int x = lado - 1; x > -1; x--) {
+			for (int y = lado - 1; y > -1; y--) {
 				pixeles[i] = pixelesTemporales[x + y * lado];
 				i++;
 			}

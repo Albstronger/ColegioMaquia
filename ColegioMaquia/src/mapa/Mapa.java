@@ -45,8 +45,8 @@ public abstract class Mapa {
 		int s = (compensacionY + pantalla.getAlto() + Cuadro.LADO) >> 5;
 		for (int y = n; y < s; y++) {
 			for (int x = o; x < e; x++) {
-				//getCuadro(x, y).mostrar(x, y, pantalla);
-				if(x < 0 || y < 0 || x >= ancho || y >= alto) {
+				// getCuadro(x, y).mostrar(x, y, pantalla);
+				if (x < 0 || y < 0 || x >= ancho || y >= alto) {
 					Cuadro.VOID.mostrar(x, y, pantalla);
 				} else {
 					cuadrosCatalogo[x + y * ancho].mostrar(x, y, pantalla);

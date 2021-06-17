@@ -7,33 +7,33 @@ import javax.imageio.ImageIO;
 
 import mapa.cuadro.Cuadro;
 
-public class MapaCargado extends Mapa{
+public class MapaCargado extends Mapa {
 
 	private int pixeles[];
-	
+
 	public MapaCargado(final String ruta) {
 		super(ruta);
 	}
-	
+
 	protected void cargarMapa(String ruta) {
 		try {
 			BufferedImage imagen = ImageIO.read(MapaCargado.class.getResource(ruta));
-			
+
 			ancho = imagen.getWidth();
 			alto = imagen.getHeight();
-			
+
 			cuadrosCatalogo = new Cuadro[ancho * alto];
 			pixeles = new int[ancho * alto];
-			
+
 			imagen.getRGB(0, 0, ancho, alto, pixeles, 0, ancho);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	protected void generarMapa() {
-		for(int i = 0; i < pixeles.length; i++) {
-			switch(pixeles[i]) {
+		for (int i = 0; i < pixeles.length; i++) {
+			switch (pixeles[i]) {
 			case 0xff8a8a8a:
 				cuadrosCatalogo[i] = Cuadro.STONE;
 				continue;
@@ -50,7 +50,7 @@ public class MapaCargado extends Mapa{
 				cuadrosCatalogo[i] = Cuadro.CBSTONE;
 				continue;
 			default:
-				cuadrosCatalogo[i] = Cuadro.VOID;			
+				cuadrosCatalogo[i] = Cuadro.VOID;
 			}
 		}
 	}
