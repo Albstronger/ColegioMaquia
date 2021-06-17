@@ -22,12 +22,20 @@ public abstract class Ente {
 		eliminado = true;
 	}
 
-	public int posicionX() {
+	public int getX() {
 		return x;
 	}
 
-	public int posicionY() {
+	public void modificarX(final int desplazamientoX) {
+		x += desplazamientoX;
+	}
+
+	public int getY() {
 		return y;
+	}
+
+	public void modificarY(final int desplazamientoY) {
+		y += desplazamientoY;
 	}
 
 	public boolean estaEliminado() {
