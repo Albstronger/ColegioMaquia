@@ -125,8 +125,8 @@ public class Juego extends Canvas implements Runnable {
 		g.fillRect(ANCHO / 2, ALTO / 2, 32, 32);
 		g.drawString(CONTADOR_APS, 10, 20);
 		g.drawString(CONTADOR_FPS, 10, 40);
-		g.drawString("X= " + jugador.getX(), 10, 60);
-		g.drawString("Y= " + jugador.getY(), 10, 80);
+		g.drawString("X: " + jugador.getX(), 10, 60);
+		g.drawString("Y: " + jugador.getY(), 10, 80);
 		g.dispose();
 
 		estrategia.show();
