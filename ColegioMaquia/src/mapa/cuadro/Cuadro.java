@@ -2,14 +2,8 @@ package mapa.cuadro;
 
 import graficos.Pantalla;
 import graficos.Sprite;
-import mapa.cuadro.bloques.CuadroCbstone;
-import mapa.cuadro.bloques.CuadroGrass;
-import mapa.cuadro.bloques.CuadroSand;
-import mapa.cuadro.bloques.CuadroStone;
-import mapa.cuadro.bloques.CuadroVoid;
-import mapa.cuadro.bloques.CuadroWood;
 
-public abstract class Cuadro {
+public class Cuadro {
 	public int x;
 	public int y;
 
@@ -18,12 +12,12 @@ public abstract class Cuadro {
 	public static final int LADO = 32;
 
 	// colección cuadros
-	public static final Cuadro VOID = new CuadroVoid(Sprite.VOID);
-	public static final Cuadro STONE = new CuadroStone(Sprite.STONE);
-	public static final Cuadro GRASS = new CuadroGrass(Sprite.GRASS);
-	public static final Cuadro SAND = new CuadroSand(Sprite.SAND);
-	public static final Cuadro WOOD = new CuadroWood(Sprite.WOOD);
-	public static final Cuadro CBSTONE = new CuadroCbstone(Sprite.CBSTONE);
+	public static final Cuadro VOID = new Cuadro(Sprite.VOID);
+	public static final Cuadro STONE = new Cuadro(Sprite.STONE);
+	public static final Cuadro GRASS = new Cuadro(Sprite.GRASS);
+	public static final Cuadro SAND = new Cuadro(Sprite.SAND);
+	public static final Cuadro WOOD = new Cuadro(Sprite.WOOD);
+	public static final Cuadro CBSTONE = new Cuadro(Sprite.CBSTONE);
 	// fin colección
 
 	public Cuadro(Sprite sprite) {
