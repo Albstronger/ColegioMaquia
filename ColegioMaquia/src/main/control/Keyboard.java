@@ -12,8 +12,10 @@ public final class Keyboard implements KeyListener {
 	public boolean down;
 	public boolean left;
 	public boolean right;
-	public boolean exit;
+
 	public boolean run;
+
+	public boolean exit;
 
 	public void update() {
 		up = keys[KeyEvent.VK_W];

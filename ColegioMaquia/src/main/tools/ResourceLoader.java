@@ -10,12 +10,14 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class SourceLoader {
-	public static BufferedImage LoadOpaqueCompatibleImage(String path) {
+public class ResourceLoader {
+
+	public static BufferedImage loadOpaqueCompatibleImage(String path) {
+
 		Image image = null;
 
 		try {
-			image = ImageIO.read(ClassLoader.class.getResource(path));
+			image = ImageIO.read(ResourceLoader.class.getResource(path));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -33,7 +35,7 @@ public class SourceLoader {
 		return acceleratedImage;
 	}
 
-	public static BufferedImage LoadTranslucentCompatibleImage(String path) {
+	public static BufferedImage loadTranslucentCompatibleImage(String path) {
 		Image image = null;
 
 		try {

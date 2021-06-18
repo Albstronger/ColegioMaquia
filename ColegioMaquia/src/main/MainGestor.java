@@ -34,7 +34,7 @@ public class MainGestor {
 	}
 
 	private void initialize() {
-		ds = new DrawingSurface();
+		ds = new DrawingSurface(width, height);
 		window = new Window(title, ds);
 		sg = new StateGestor();
 	}
@@ -71,7 +71,7 @@ public class MainGestor {
 			fps++;
 
 			if (System.nanoTime() - counterReference > NS_PER_SECOND) {
-				System.out.println("FPS: " + fps + "|| APS: " + aps);
+				System.out.println("FPS: " + fps + " || APS: " + aps);
 				aps = 0;
 				fps = 0;
 				counterReference = System.nanoTime();
@@ -80,10 +80,11 @@ public class MainGestor {
 	}
 
 	private void update() {
-//		sg.update();
+		ds.getKeyboard().update();
+		sg.update();
 	}
 
 	private void draw() {
-//		sg.draw(g);
+		ds.draw(sg);
 	}
 }
