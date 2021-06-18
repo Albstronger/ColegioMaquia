@@ -9,7 +9,7 @@ import main.statemachine.GameState;
 public class GameGestor implements GameState {
 
 	private MapGestor mapGestor;
-	SpriteSheet ssh = new SpriteSheet("/images/textureSheets/001.png", 32, true);
+	SpriteSheet ssh = new SpriteSheet("/images/textureSheets/01.png", 32, true);
 
 	public void update() {
 
