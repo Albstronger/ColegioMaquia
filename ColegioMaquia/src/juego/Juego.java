@@ -59,7 +59,7 @@ public class Juego extends Canvas implements Runnable {
 		// mapa = new MapaGenerado(128, 128);
 		mapa = new MapaCargado("/mapas/mapaPrueba.png");
 
-		jugador = new Jugador(teclado, Sprite.ABAJO0, 240, 240);
+		jugador = new Jugador(teclado, Sprite.ABAJO0, mapa, 240, 240);
 
 		ventana = new JFrame(NOMBRE);
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

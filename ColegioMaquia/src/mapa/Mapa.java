@@ -36,23 +36,31 @@ public abstract class Mapa {
 	}
 
 	public void mostrar(final int compensacionX, final int compensacionY, final Pantalla pantalla) {
-//
-//		pantalla.setDiferencia(compensacionX, compensacionY);
-//
-//		int o = compensacionX >> 5;
-//		int e = (compensacionX + pantalla.getAncho() + Cuadro.LADO) >> 5;
-//		int n = compensacionY >> 5;
-//		int s = (compensacionY + pantalla.getAlto() + Cuadro.LADO) >> 5;
-//		for (int y = n; y < s; y++) {
-//			for (int x = o; x < e; x++) {
-//				// getCuadro(x, y).mostrar(x, y, pantalla);
-//				if (x < 0 || y < 0 || x >= ancho || y >= alto) {
-//					Cuadro.VOID.mostrar(x, y, pantalla);
-//				} else {
-//					cuadrosCatalogo[x + y * ancho].mostrar(x, y, pantalla);
-//				}
-//			}
-//		}
+
+		pantalla.setDiferencia(compensacionX, compensacionY);
+
+		int o = compensacionX >> 5;
+		int e = (compensacionX + pantalla.getAncho() + Cuadro.LADO) >> 5;
+		int n = compensacionY >> 5;
+		int s = (compensacionY + pantalla.getAlto() + Cuadro.LADO) >> 5;
+		for (int y = n; y < s; y++) {
+			for (int x = o; x < e; x++) {
+				// getCuadro(x, y).mostrar(x, y, pantalla);
+				if (x < 0 || y < 0 || x >= ancho || y >= alto) {
+					Cuadro.VOID.mostrar(x, y, pantalla);
+				} else {
+					cuadrosCatalogo[x + y * ancho].mostrar(x, y, pantalla);
+				}
+			}
+		}
+	}
+
+	public Cuadro getCatalogo(int posicion) {
+		return cuadrosCatalogo[posicion];
+	}
+
+	public int getAncho() {
+		return ancho;
 	}
 
 	public Cuadro getCuadro(final int x, final int y) {

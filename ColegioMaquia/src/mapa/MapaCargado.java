@@ -5,7 +5,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import graficos.Pantalla;
 import mapa.cuadro.Cuadro;
 
 public class MapaCargado extends Mapa {
@@ -52,25 +51,6 @@ public class MapaCargado extends Mapa {
 				continue;
 			default:
 				cuadrosCatalogo[i] = Cuadro.VOID;
-			}
-		}
-	}
-
-	public void mostrar(final int compensacionX, final int compensacionY, final Pantalla pantalla) {
-
-		pantalla.setDiferencia(compensacionX, compensacionY);
-
-		int o = compensacionX >> 5;
-		int e = (compensacionX + pantalla.getAncho() + Cuadro.LADO) >> 5;
-		int n = compensacionY >> 5;
-		int s = (compensacionY + pantalla.getAlto() + Cuadro.LADO) >> 5;
-		for (int y = n; y < s; y++) {
-			for (int x = o; x < e; x++) {
-				if (x < 0 || y < 0 || x >= ancho || y >= alto) {
-					Cuadro.VOID.mostrar(x, y, pantalla);
-				} else {
-					cuadrosCatalogo[x + y * ancho].mostrar(x, y, pantalla);
-				}
 			}
 		}
 	}
