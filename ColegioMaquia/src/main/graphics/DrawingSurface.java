@@ -8,6 +8,7 @@ import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 
 import main.control.Keyboard;
+import main.control.Mouse;
 import main.statemachine.StateGestor;
 
 public class DrawingSurface extends Canvas {
@@ -18,14 +19,17 @@ public class DrawingSurface extends Canvas {
 	private int height;
 
 	private Keyboard keyboard;
+	private Mouse mouse;
 
 	public DrawingSurface(final int width, final int height) {
 		this.width = width;
 		this.height = height;
 
 		keyboard = new Keyboard();
+		mouse = new Mouse();
 
 		setIgnoreRepaint(true);
+		setCursor(mouse.getCursor());
 		setPreferredSize(new Dimension(width, height));
 		addKeyListener(keyboard);
 		setFocusable(true);
