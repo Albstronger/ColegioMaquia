@@ -17,7 +17,7 @@ public class SpriteSheet {
 
 	final private Sprite[] sprites;
 
-	public SpriteSheet(final String path, final int spriteSize, final boolean opaqueSheet) {
+	public SpriteSheet(final String path, final int spriteSide, final boolean opaqueSheet) {
 		BufferedImage image;
 
 		if (opaqueSheet) {
@@ -29,11 +29,11 @@ public class SpriteSheet {
 		sheetPixelWidth = image.getWidth();
 		sheetPixelHeight = image.getHeight();
 
-		sheetSpriteWidth = sheetPixelWidth / spriteSize;
-		sheetSpriteHeight = sheetPixelHeight / spriteSize;
+		sheetSpriteWidth = sheetPixelWidth / spriteSide;
+		sheetSpriteHeight = sheetPixelHeight / spriteSide;
 
-		spriteWidth = spriteSize;
-		spriteHeight = spriteSize;
+		spriteWidth = spriteSide;
+		spriteHeight = spriteSide;
 
 		sprites = new Sprite[sheetSpriteWidth * sheetSpriteHeight];
 
@@ -65,7 +65,7 @@ public class SpriteSheet {
 
 	private void fillSpritesFromImage(final BufferedImage image) {
 		for (int y = 0; y < sheetSpriteHeight; y++) {
-			for (int x = 0; x < sheetSpriteHeight; x++) {
+			for (int x = 0; x < sheetSpriteWidth; x++) {
 				final int xPos = x * spriteWidth;
 				final int yPos = y * spriteHeight;
 

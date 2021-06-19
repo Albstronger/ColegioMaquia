@@ -5,17 +5,17 @@ import java.awt.event.KeyListener;
 
 public final class Keyboard implements KeyListener {
 
-	private final static int KEY_NUMBER = 256;
-	private final boolean[] keys = new boolean[KEY_NUMBER];
+	private final int keyNumber = 256;
+	private final boolean[] keys = new boolean[keyNumber];
 
-	public boolean up;
-	public boolean down;
-	public boolean left;
-	public boolean right;
+	private boolean up;
+	private boolean down;
+	private boolean left;
+	private boolean right;
 
-	public boolean run;
+	private boolean run;
 
-	public boolean exit;
+	private boolean exit;
 
 	public void update() {
 		up = keys[KeyEvent.VK_W];
@@ -24,6 +24,30 @@ public final class Keyboard implements KeyListener {
 		right = keys[KeyEvent.VK_D];
 		exit = keys[KeyEvent.VK_ESCAPE];
 		run = keys[KeyEvent.VK_CONTROL];
+	}
+
+	public boolean isUp() {
+		return up;
+	}
+
+	public boolean isDown() {
+		return down;
+	}
+
+	public boolean isLeft() {
+		return left;
+	}
+
+	public boolean isRight() {
+		return right;
+	}
+
+	public boolean isRun() {
+		return run;
+	}
+
+	public boolean isExit() {
+		return exit;
 	}
 
 	public void keyPressed(KeyEvent e) {

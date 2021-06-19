@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import main.Constants;
 import main.sprites.Sprite;
 import main.sprites.SpriteSheet;
 import main.tools.ResourceLoader;
@@ -113,15 +114,15 @@ public class Map {
 		return spriteVector;
 	}
 
-	public void draw(Graphics g) {
-		int spriteWidth = this.palette[0].getWidth();
-		int spriteHeight = this.palette[0].getHeight();
+	public void draw(Graphics g, int PlayerX, int PlayerY) {
+		int spriteWidth = Constants.SPRITE_SIDE;
+		int spriteHeight = Constants.SPRITE_SIDE;
 
-		for (int y = 0; y < this.height; y++) {
-			for (int x = 0; x < this.width; x++) {
-				BufferedImage image = palette[sprites[x + y * this.width]].getImage();
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				BufferedImage image = palette[sprites[x + y * width]].getImage();
 
-				g.drawImage(image, x * spriteWidth, y * spriteHeight, null);
+				g.drawImage(image, x * spriteWidth - PlayerX, y * spriteHeight - PlayerY, null);
 			}
 		}
 	}

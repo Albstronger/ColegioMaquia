@@ -1,11 +1,11 @@
 package main;
 
+import main.control.ControlGestor;
 import main.graphics.DrawingSurface;
 import main.graphics.Window;
 import main.statemachine.StateGestor;
 
 public class MainGestor {
-
 	private boolean running = false;
 	private String title;
 	private int width;
@@ -23,6 +23,9 @@ public class MainGestor {
 
 	public static void main(String[] args) {
 		MainGestor mg = new MainGestor("ColegioMaquia", 640, 360);
+
+		Constants.SCREEN_WIDTH = 640;
+		Constants.SCREEN_HEIGHT = 360;
 
 		mg.startGame();
 		mg.startMainLoop();
@@ -80,7 +83,7 @@ public class MainGestor {
 	}
 
 	private void update() {
-		ds.getKeyboard().update();
+		ControlGestor.KEYBOARD.update();
 		sg.update();
 	}
 
