@@ -43,24 +43,26 @@ public class Player {
 			dir = 1;
 			y -= 1;
 			moving = true;
+			animate();
 		}
 		if (ControlGestor.KEYBOARD.isDown()) {
 			dir = 0;
 			y += 1;
 			moving = true;
+			animate();
 		}
 		if (ControlGestor.KEYBOARD.isLeft()) {
 			dir = 3;
 			x -= 1;
 			moving = true;
+			animate();
 		}
 		if (ControlGestor.KEYBOARD.isRight()) {
 			dir = 2;
 			x += 1;
 			moving = true;
+			animate();
 		}
-
-		animate();
 		moving = false;
 	}
 
