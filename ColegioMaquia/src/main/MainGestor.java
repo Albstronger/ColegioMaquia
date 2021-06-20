@@ -67,6 +67,7 @@ public class MainGestor {
 			while (delta >= 1) {
 				update();
 				aps++;
+				Constants.APS = aps;
 				delta--;
 			}
 
@@ -76,6 +77,7 @@ public class MainGestor {
 			if (System.nanoTime() - counterReference > NS_PER_SECOND) {
 				System.out.println("FPS: " + fps + " || APS: " + aps);
 				aps = 0;
+				Constants.APS = aps;
 				fps = 0;
 				counterReference = System.nanoTime();
 			}

@@ -1,5 +1,6 @@
 package main.entities;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -12,7 +13,11 @@ public class Player {
 	private double x;
 	private double y;
 
-	private char dir;
+	private int animationState;
+
+	private int dir;
+
+	private boolean moving;
 
 	private SpriteSheet sheet;
 
@@ -22,7 +27,11 @@ public class Player {
 		this.x = x;
 		this.y = y;
 
-		dir = 's';
+		animationState = 0;
+
+		dir = 1;
+
+		moving = false;
 
 		sheet = new SpriteSheet("/images/playerSheets/1.png", Constants.SPRITE_SIDE, false);
 
@@ -30,43 +39,58 @@ public class Player {
 	}
 
 	public void update() {
-		dir = 'n';
 		if (ControlGestor.KEYBOARD.isUp()) {
-			dir = 'n';
-			animate();
+			dir = 1;
 			y -= 1;
+			moving = true;
 		}
 		if (ControlGestor.KEYBOARD.isDown()) {
-			dir = 's';
-			animate();
+			dir = 0;
 			y += 1;
+			moving = true;
 		}
 		if (ControlGestor.KEYBOARD.isLeft()) {
-			dir = 'w';
-			animate();
+			dir = 3;
 			x -= 1;
+			moving = true;
 		}
 		if (ControlGestor.KEYBOARD.isRight()) {
-			dir = 'e';
-			animate();
+			dir = 2;
 			x += 1;
+			moving = true;
 		}
+
+		animate();
+		moving = false;
 	}
 
-	public void animate() {
-		switch (dir) {
-		case 'n':
-			actualImage = sheet.getSprite(1, 0).getImage();
-			break;
-		case 's':
-			actualImage = sheet.getSprite(0, 0).getImage();
-			break;
-		case 'w':
-			actualImage = sheet.getSprite(3, 0).getImage();
-			break;
-		case 'e':
-			actualImage = sheet.getSprite(2, 0).getImage();
-			break;
+	private void animate() {
+		int animationFrecuency = 10;
+		int stateLimit = 4;
+
+		if (moving) {
+			if (Constants.APS % animationFrecuency == 0) {
+				animationState++;
+				if (animationState >= stateLimit) {
+					animationState = 0;
+				}
+
+				switch (animationState) {
+				case 0:
+					actualImage = sheet.getSprite(dir, 1).getImage();
+					break;
+				case 1:
+					actualImage = sheet.getSprite(dir, 0).getImage();
+					break;
+				case 2:
+					actualImage = sheet.getSprite(dir, 2).getImage();
+					break;
+				case 3:
+					actualImage = sheet.getSprite(dir, 0).getImage();
+				}
+			}
+		} else {
+			actualImage = sheet.getSprite(dir, 0).getImage();
 		}
 	}
 
@@ -74,7 +98,9 @@ public class Player {
 		final int Xcenter = Constants.SCREEN_WIDTH / 2 - Constants.SPRITE_SIDE / 2;
 		final int Ycenter = Constants.SCREEN_HEIGHT / 2 - Constants.SPRITE_SIDE / 2;
 
+		g.setColor(Color.GREEN);
 		g.drawImage(actualImage, Xcenter, Ycenter, null);
+		// g.drawRect(Xcenter, Ycenter, 32, 32);
 	}
 
 	public double getX() {
