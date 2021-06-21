@@ -5,60 +5,43 @@ import java.awt.event.KeyListener;
 
 public final class Keyboard implements KeyListener {
 
-	private final int keyNumber = 256;
-	private final boolean[] keys = new boolean[keyNumber];
-
-	private boolean up;
-	private boolean down;
-	private boolean left;
-	private boolean right;
-
-	private boolean run;
-
-	private boolean exit;
-
-	public void update() {
-		up = keys[KeyEvent.VK_W];
-		down = keys[KeyEvent.VK_S];
-		left = keys[KeyEvent.VK_A];
-		right = keys[KeyEvent.VK_D];
-		exit = keys[KeyEvent.VK_ESCAPE];
-		run = keys[KeyEvent.VK_CONTROL];
-	}
-
-	public boolean isUp() {
-		return up;
-	}
-
-	public boolean isDown() {
-		return down;
-	}
-
-	public boolean isLeft() {
-		return left;
-	}
-
-	public boolean isRight() {
-		return right;
-	}
-
-	public boolean isRun() {
-		return run;
-	}
-
-	public boolean isExit() {
-		return exit;
-	}
+	public Key up = new Key();
+	public Key down = new Key();
+	public Key left = new Key();
+	public Key right = new Key();
 
 	public void keyPressed(KeyEvent e) {
-		keys[e.getKeyCode()] = true;
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_W:
+			up.keyPressed();
+			break;
+		case KeyEvent.VK_S:
+			down.keyPressed();
+			break;
+		case KeyEvent.VK_A:
+			left.keyPressed();
+			break;
+		case KeyEvent.VK_D:
+			right.keyPressed();
+		}
 	}
 
 	public void keyReleased(KeyEvent e) {
-		keys[e.getKeyCode()] = false;
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_W:
+			up.keyReleased();
+			break;
+		case KeyEvent.VK_S:
+			down.keyReleased();
+			break;
+		case KeyEvent.VK_A:
+			left.keyReleased();
+			break;
+		case KeyEvent.VK_D:
+			right.keyReleased();
+		}
 	}
 
 	public void keyTyped(KeyEvent e) {
 	}
-
 }

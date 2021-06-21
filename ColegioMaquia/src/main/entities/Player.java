@@ -13,9 +13,9 @@ public class Player {
 	private double x;
 	private double y;
 
-	private int animationState;
-
 	private int dir;
+
+	private double speed = 1;
 
 	private boolean moving;
 
@@ -23,11 +23,12 @@ public class Player {
 
 	private BufferedImage actualImage;
 
+	private int animation;
+	private int state;
+
 	public Player(final double x, final double y) {
 		this.x = x;
 		this.y = y;
-
-		animationState = 0;
 
 		dir = 1;
 
@@ -36,64 +37,131 @@ public class Player {
 		sheet = new SpriteSheet("/images/playerSheets/1.png", Constants.SPRITE_SIDE, false);
 
 		actualImage = sheet.getSprite(0).getImage();
+
+		animation = 0;
+		state = 0;
 	}
 
 	public void update() {
-		if (ControlGestor.KEYBOARD.isUp()) {
-			dir = 1;
-			y -= 1;
-			moving = true;
-			animate();
-		}
-		if (ControlGestor.KEYBOARD.isDown()) {
-			dir = 0;
-			y += 1;
-			moving = true;
-			animate();
-		}
-		if (ControlGestor.KEYBOARD.isLeft()) {
-			dir = 3;
-			x -= 1;
-			moving = true;
-			animate();
-		}
-		if (ControlGestor.KEYBOARD.isRight()) {
-			dir = 2;
-			x += 1;
-			moving = true;
-			animate();
-		}
+		changeAnimationState();
 		moving = false;
+		determinateDirection();
+		animate();
+	}
+
+	private void changeAnimationState() {
+		if (animation < 30) {
+			animation++;
+		} else {
+			animation = 0;
+		}
+
+		if (animation < 15) {
+			state = 1;
+		} else {
+			state = 2;
+		}
+	}
+
+	private void determinateDirection() {
+		final int xSpeed = evaluateXSpeed();
+		final int ySpeed = evaluateYSpeed();
+
+		if (xSpeed == 0 && ySpeed == 0) {
+			return;
+		}
+
+		if ((xSpeed != 0 && ySpeed == 0) || (xSpeed == 0 && ySpeed != 0)) {
+			move(xSpeed, ySpeed);
+		} else {
+			if (xSpeed == -1 && ySpeed == -1) {
+				if (ControlGestor.KEYBOARD.left.getLastPress() > ControlGestor.KEYBOARD.up.getLastPress()) {
+					move(xSpeed, 0);
+				} else {
+					move(0, ySpeed);
+				}
+			}
+
+			if (xSpeed == -1 && ySpeed == 1) {
+				if (ControlGestor.KEYBOARD.left.getLastPress() > ControlGestor.KEYBOARD.down.getLastPress()) {
+					move(xSpeed, 0);
+				} else {
+					move(0, ySpeed);
+				}
+			}
+
+			if (xSpeed == 1 && ySpeed == -1) {
+				if (ControlGestor.KEYBOARD.right.getLastPress() > ControlGestor.KEYBOARD.up.getLastPress()) {
+					move(xSpeed, 0);
+				} else {
+					move(0, ySpeed);
+				}
+			}
+
+			if (xSpeed == 1 && ySpeed == 1) {
+				if (ControlGestor.KEYBOARD.right.getLastPress() > ControlGestor.KEYBOARD.down.getLastPress()) {
+					move(xSpeed, 0);
+				} else {
+					move(0, ySpeed);
+				}
+			}
+		}
+	}
+
+	private int evaluateXSpeed() {
+		int xSpeed = 0;
+
+		if (ControlGestor.KEYBOARD.left.isPressed() && !ControlGestor.KEYBOARD.right.isPressed()) {
+			xSpeed = -1;
+		} else if (ControlGestor.KEYBOARD.right.isPressed() && !ControlGestor.KEYBOARD.left.isPressed()) {
+			xSpeed = 1;
+		}
+
+		return xSpeed;
+	}
+
+	private int evaluateYSpeed() {
+		int ySpeed = 0;
+
+		if (ControlGestor.KEYBOARD.up.isPressed() && !ControlGestor.KEYBOARD.down.isPressed()) {
+			ySpeed = -1;
+		} else if (ControlGestor.KEYBOARD.down.isPressed() && !ControlGestor.KEYBOARD.up.isPressed()) {
+			ySpeed = 1;
+		}
+
+		return ySpeed;
+	}
+
+	private void move(final int xSpeed, final int ySpeed) {
+		moving = true;
+
+		changeDirection(xSpeed, ySpeed);
+
+		x += xSpeed * speed;
+		y += ySpeed * speed;
+	}
+
+	private void changeDirection(final int xSpeed, final int ySpeed) {
+		if (xSpeed == -1) {
+			dir = 3;
+		} else if (xSpeed == 1) {
+			dir = 2;
+		}
+
+		if (ySpeed == -1) {
+			dir = 1;
+		} else if (ySpeed == 1) {
+			dir = 0;
+		}
 	}
 
 	private void animate() {
-		int animationFrecuency = 10;
-		int stateLimit = 4;
-
-		if (moving) {
-			if (Constants.APS % animationFrecuency == 0) {
-				animationState++;
-				if (animationState >= stateLimit) {
-					animationState = 0;
-				}
-
-				switch (animationState) {
-				case 0:
-					actualImage = sheet.getSprite(dir, 1).getImage();
-					break;
-				case 1:
-					actualImage = sheet.getSprite(dir, 0).getImage();
-					break;
-				case 2:
-					actualImage = sheet.getSprite(dir, 2).getImage();
-					break;
-				case 3:
-					actualImage = sheet.getSprite(dir, 0).getImage();
-				}
-			}
-		} else {
-			actualImage = sheet.getSprite(dir, 0).getImage();
+		if (!moving) {
+			state = 0;
+			animation = 0;
 		}
+
+		actualImage = sheet.getSprite(dir, state).getImage();
 	}
 
 	public void draw(Graphics g) {

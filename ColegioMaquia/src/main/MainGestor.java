@@ -1,6 +1,5 @@
 package main;
 
-import main.control.ControlGestor;
 import main.graphics.DrawingSurface;
 import main.graphics.Window;
 import main.statemachine.StateGestor;
@@ -85,7 +84,6 @@ public class MainGestor {
 	}
 
 	private void update() {
-		ControlGestor.KEYBOARD.update();
 		sg.update();
 	}
 
