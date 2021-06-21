@@ -10,10 +10,11 @@ import main.statemachine.GameState;
 public class GameGestor implements GameState {
 
 	private Map map = new Map("/text/testMap.map");
-	private Player player = new Player(0, 0);
+	private Player player = new Player(0, 0, map);
 
 	public void update() {
 		player.update();
+		map.update((int) player.getX(), (int) player.getY());
 	}
 
 	public void draw(Graphics g) {

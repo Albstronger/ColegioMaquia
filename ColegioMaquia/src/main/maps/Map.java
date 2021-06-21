@@ -1,8 +1,10 @@
 package main.maps;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.List;
 
 import main.Constants;
 import main.sprites.Sprite;
@@ -19,6 +21,11 @@ public class Map {
 	private final Sprite[] palette;
 
 	private final boolean[] collisions;
+
+	public List<Rectangle> collisionAreas = new ArrayList<Rectangle>();
+
+	private final int X_MARGIN = Constants.WINDOW_WIDTH / 2 - Constants.SPRITE_SIDE / 2;
+	private final int Y_MARGIN = Constants.WINDOW_HEIGHT / 2 - Constants.SPRITE_SIDE / 2;
 
 	private final int[] sprites;
 
@@ -73,13 +80,13 @@ public class Map {
 		boolean[] collisions = new boolean[collisionString.length()];
 
 		for (int i = 0; i < collisionString.length(); i++) {
-			if (collisionString.charAt(i) == 0) {
+			if (collisionString.charAt(i) == '0') {
 				collisions[i] = false;
 			} else {
 				collisions[i] = true;
 			}
 		}
-		return null;
+		return collisions;
 	}
 
 	private int[] extractSprites(final String[] spriteArray) {
@@ -114,16 +121,54 @@ public class Map {
 		return spriteVector;
 	}
 
+	public void update(final int playerX, final int playerY) {
+		updateCollisionAreas(playerX, playerY);
+	}
+
+	private void updateCollisionAreas(final int playerX, final int playerY) {
+		if (!collisionAreas.isEmpty()) {
+			collisionAreas.clear();
+		}
+
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				int xPoint = x * Constants.SPRITE_SIDE - playerX + X_MARGIN;
+				int yPoint = y * Constants.SPRITE_SIDE - playerY + Y_MARGIN;
+
+				if (collisions[x + y * width]) {
+					final Rectangle r = new Rectangle(xPoint, yPoint, Constants.SPRITE_SIDE, Constants.SPRITE_SIDE);
+					collisionAreas.add(r);
+				}
+			}
+		}
+	}
+
 	public void draw(Graphics g, int PlayerX, int PlayerY) {
-		int spriteWidth = Constants.SPRITE_SIDE;
-		int spriteHeight = Constants.SPRITE_SIDE;
 
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				BufferedImage image = palette[sprites[x + y * width]].getImage();
 
-				g.drawImage(image, x * spriteWidth - PlayerX, y * spriteHeight - PlayerY, null);
+				int xPoint = x * Constants.SPRITE_SIDE - PlayerX + X_MARGIN;
+				int yPoint = y * Constants.SPRITE_SIDE - PlayerY + Y_MARGIN;
+
+				g.drawImage(image, xPoint, yPoint, null);
+
+//				g.setColor(Color.GREEN);
+//				for (int r = 0; r < collisionAreas.size(); r++) {
+//					Rectangle area = collisionAreas.get(r);
+//					g.drawRect(area.x, area.y, area.width, area.height);
+//				}
 			}
 		}
+	}
+
+	public Rectangle getBorders(final int xPos, final int yPos, final int playerWidth, final int playerHeight) {
+		int x = X_MARGIN - xPos + playerWidth;
+		int y = Y_MARGIN - yPos + playerHeight;
+		int width = this.width * Constants.SPRITE_SIDE - playerWidth * 2;
+		int height = this.height * Constants.SPRITE_SIDE - playerHeight * 2;
+
+		return new Rectangle(x, y, width, height);
 	}
 }

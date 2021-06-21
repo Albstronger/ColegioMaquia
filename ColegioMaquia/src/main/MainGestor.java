@@ -23,8 +23,11 @@ public class MainGestor {
 	public static void main(String[] args) {
 		MainGestor mg = new MainGestor("ColegioMaquia", 640, 360);
 
-		Constants.SCREEN_WIDTH = 640;
-		Constants.SCREEN_HEIGHT = 360;
+		Constants.WINDOW_WIDTH = 640;
+		Constants.WINDOW_HEIGHT = 360;
+
+		Constants.WINDOW_X_CENTER = Constants.WINDOW_WIDTH / 2;
+		Constants.WINDOW_Y_CENTER = Constants.WINDOW_HEIGHT / 2;
 
 		mg.startGame();
 		mg.startMainLoop();

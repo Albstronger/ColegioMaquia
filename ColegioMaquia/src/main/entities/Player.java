@@ -2,10 +2,12 @@ package main.entities;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import main.Constants;
 import main.control.ControlGestor;
+import main.maps.Map;
 import main.sprites.SpriteSheet;
 
 public class Player {
@@ -23,10 +25,24 @@ public class Player {
 
 	private BufferedImage actualImage;
 
+	private final int PLAYER_WIDTH = 16;
+	private final int PLAYER_HEIGHT = 16;
+
+	private final Rectangle UP_LIMIT = new Rectangle(Constants.WINDOW_X_CENTER - PLAYER_WIDTH / 2,
+			Constants.WINDOW_Y_CENTER, PLAYER_WIDTH, 1);
+	private final Rectangle DOWN_LIMIT = new Rectangle(Constants.WINDOW_X_CENTER - PLAYER_WIDTH / 2,
+			Constants.WINDOW_Y_CENTER + PLAYER_HEIGHT, PLAYER_WIDTH, 1);
+	private final Rectangle LEFT_LIMIT = new Rectangle(Constants.WINDOW_X_CENTER - PLAYER_WIDTH / 2,
+			Constants.WINDOW_Y_CENTER, 1, PLAYER_HEIGHT);
+	private final Rectangle RIGHT_LIMIT = new Rectangle(Constants.WINDOW_X_CENTER + PLAYER_WIDTH / 2,
+			Constants.WINDOW_Y_CENTER, 1, PLAYER_HEIGHT);
+
 	private int animation;
 	private int state;
 
-	public Player(final double x, final double y) {
+	private Map map;
+
+	public Player(double x, double y, Map map) {
 		this.x = x;
 		this.y = y;
 
@@ -40,6 +56,8 @@ public class Player {
 
 		animation = 0;
 		state = 0;
+
+		this.map = map;
 	}
 
 	public void update() {
@@ -137,8 +155,110 @@ public class Player {
 
 		changeDirection(xSpeed, ySpeed);
 
-		x += xSpeed * speed;
-		y += ySpeed * speed;
+		if (!outOfMap(xSpeed, ySpeed)) {
+			if (xSpeed == -1 && !leftColliding(xSpeed)) {
+				x += xSpeed * speed;
+				return;
+			}
+			if (xSpeed == 1 && !rightColliding(xSpeed)) {
+				x += xSpeed * speed;
+				return;
+			}
+			if (ySpeed == -1 && !upColliding(ySpeed)) {
+				y += ySpeed * speed;
+				return;
+			}
+			if (ySpeed == 1 && !downColliding(ySpeed)) {
+				y += ySpeed * speed;
+				return;
+			}
+		}
+	}
+
+	private boolean upColliding(final int ySpeed) {
+		for (int r = 0; r < map.collisionAreas.size(); r++) {
+			final Rectangle area = map.collisionAreas.get(r);
+
+			int xOrigin = area.x;
+			int yOrigin = area.y + ySpeed * (int) speed + 3 * (int) speed;
+
+			final Rectangle futureArea = new Rectangle(xOrigin, yOrigin, Constants.SPRITE_SIDE, Constants.SPRITE_SIDE);
+
+			if (UP_LIMIT.intersects(futureArea)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean downColliding(final int ySpeed) {
+		for (int r = 0; r < map.collisionAreas.size(); r++) {
+			final Rectangle area = map.collisionAreas.get(r);
+
+			int xOrigin = area.x;
+			int yOrigin = area.y + ySpeed * (int) speed - 3 * (int) speed;
+
+			final Rectangle futureArea = new Rectangle(xOrigin, yOrigin, Constants.SPRITE_SIDE, Constants.SPRITE_SIDE);
+
+			if (DOWN_LIMIT.intersects(futureArea)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean leftColliding(final int xSpeed) {
+		for (int r = 0; r < map.collisionAreas.size(); r++) {
+			final Rectangle area = map.collisionAreas.get(r);
+
+			int xOrigin = area.x + xSpeed * (int) speed + 3 * (int) speed;
+			int yOrigin = area.y;
+
+			final Rectangle futureArea = new Rectangle(xOrigin, yOrigin, Constants.SPRITE_SIDE, Constants.SPRITE_SIDE);
+
+			if (LEFT_LIMIT.intersects(futureArea)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean rightColliding(final int xSpeed) {
+		for (int r = 0; r < map.collisionAreas.size(); r++) {
+			final Rectangle area = map.collisionAreas.get(r);
+
+			int xOrigin = area.x + xSpeed * (int) speed - 3 * (int) speed;
+			int yOrigin = area.y;
+
+			final Rectangle futureArea = new Rectangle(xOrigin, yOrigin, Constants.SPRITE_SIDE, Constants.SPRITE_SIDE);
+
+			if (RIGHT_LIMIT.intersects(futureArea)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean outOfMap(final int xSpeed, final int ySpeed) {
+
+		int futureX = (int) x + xSpeed * (int) speed;
+		int futureY = (int) y + ySpeed * (int) speed;
+
+		final Rectangle mapBorders = map.getBorders(futureX, futureY, PLAYER_WIDTH, PLAYER_HEIGHT);
+
+		final boolean out;
+
+		if (UP_LIMIT.intersects(mapBorders) || DOWN_LIMIT.intersects(mapBorders) || LEFT_LIMIT.intersects(mapBorders)
+				|| RIGHT_LIMIT.intersects(mapBorders)) {
+			out = false;
+		} else {
+			out = true;
+		}
+		return out;
 	}
 
 	private void changeDirection(final int xSpeed, final int ySpeed) {
@@ -165,12 +285,15 @@ public class Player {
 	}
 
 	public void draw(Graphics g) {
-		final int Xcenter = Constants.SCREEN_WIDTH / 2 - Constants.SPRITE_SIDE / 2;
-		final int Ycenter = Constants.SCREEN_HEIGHT / 2 - Constants.SPRITE_SIDE / 2;
+		final int Xcenter = Constants.WINDOW_WIDTH / 2 - Constants.SPRITE_SIDE / 2;
+		final int Ycenter = Constants.WINDOW_HEIGHT / 2 - Constants.SPRITE_SIDE / 2;
 
 		g.setColor(Color.GREEN);
 		g.drawImage(actualImage, Xcenter, Ycenter, null);
-		// g.drawRect(Xcenter, Ycenter, 32, 32);
+		g.drawRect(UP_LIMIT.x, UP_LIMIT.y, UP_LIMIT.width, UP_LIMIT.height);
+		g.drawRect(DOWN_LIMIT.x, DOWN_LIMIT.y, DOWN_LIMIT.width, DOWN_LIMIT.height);
+		g.drawRect(LEFT_LIMIT.x, LEFT_LIMIT.y, LEFT_LIMIT.width, LEFT_LIMIT.height);
+		g.drawRect(RIGHT_LIMIT.x, RIGHT_LIMIT.y, RIGHT_LIMIT.width, RIGHT_LIMIT.height);
 	}
 
 	public double getX() {
