@@ -40,6 +40,11 @@ public class Player {
 	private int animation;
 	private int state;
 
+	private int resistance = 600;
+	private int recuperation = 0;
+	private final int MAX_RECUPERATION = 200;
+	private boolean recovered = true;
+
 	private Map map;
 
 	public Player(double x, double y, Map map) {
@@ -61,10 +66,27 @@ public class Player {
 	}
 
 	public void update() {
+		manageSpeedAndResistance();
 		changeAnimationState();
 		moving = false;
 		determinateDirection();
 		animate();
+	}
+
+	private void manageSpeedAndResistance() {
+		if (ControlGestor.KEYBOARD.running && resistance > 0) {
+			speed = 2;
+			recovered = false;
+			recuperation = 0;
+		} else {
+			speed = 1;
+			if (!recovered && recuperation < MAX_RECUPERATION) {
+				recuperation++;
+			}
+			if (recuperation == MAX_RECUPERATION && resistance < 600) {
+				resistance++;
+			}
+		}
 	}
 
 	private void changeAnimationState() {
@@ -154,30 +176,34 @@ public class Player {
 		moving = true;
 
 		changeDirection(xSpeed, ySpeed);
-		
-		if(ControlGestor.KEYBOARD.running) {
-			speed = 2;
-		}else {
-			speed = 1;
-		}
 
 		if (!outOfMap(xSpeed, ySpeed)) {
 			if (xSpeed == -1 && !leftColliding(xSpeed)) {
 				x += xSpeed * speed;
+				subtractResistance();
 				return;
 			}
 			if (xSpeed == 1 && !rightColliding(xSpeed)) {
 				x += xSpeed * speed;
+				subtractResistance();
 				return;
 			}
 			if (ySpeed == -1 && !upColliding(ySpeed)) {
 				y += ySpeed * speed;
+				subtractResistance();
 				return;
 			}
 			if (ySpeed == 1 && !downColliding(ySpeed)) {
 				y += ySpeed * speed;
+				subtractResistance();
 				return;
 			}
+		}
+	}
+
+	private void subtractResistance() {
+		if (ControlGestor.KEYBOARD.running && resistance > 0) {
+			resistance--;
 		}
 	}
 
@@ -295,12 +321,14 @@ public class Player {
 		final int Ycenter = Constants.WINDOW_HEIGHT / 2 - Constants.SPRITE_SIDE / 2;
 
 		g.drawImage(actualImage, Xcenter, Ycenter, null);
-		if(ControlGestor.KEYBOARD.debug) {
+		if (ControlGestor.KEYBOARD.debug) {
 			g.setColor(Color.GREEN);
 			g.drawRect(UP_LIMIT.x, UP_LIMIT.y, UP_LIMIT.width, UP_LIMIT.height);
 			g.drawRect(DOWN_LIMIT.x, DOWN_LIMIT.y, DOWN_LIMIT.width, DOWN_LIMIT.height);
 			g.drawRect(LEFT_LIMIT.x, LEFT_LIMIT.y, LEFT_LIMIT.width, LEFT_LIMIT.height);
 			g.drawRect(RIGHT_LIMIT.x, RIGHT_LIMIT.y, RIGHT_LIMIT.width, RIGHT_LIMIT.height);
+			g.setColor(Color.RED);
+			g.drawString("RESISTANCE = " + resistance, 10, 75);
 		}
 	}
 
@@ -310,6 +338,10 @@ public class Player {
 
 	public double getY() {
 		return y;
+	}
+
+	public int getResistance() {
+		return resistance;
 	}
 
 	public void setX(final double x) {

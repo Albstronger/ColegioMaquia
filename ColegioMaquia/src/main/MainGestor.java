@@ -13,7 +13,7 @@ public class MainGestor {
 	private DrawingSurface ds;
 	private Window window;
 	private StateGestor sg;
-	
+
 	private static int aps, fps;
 
 	private MainGestor(final String title, final int width, final int height) {
@@ -23,10 +23,7 @@ public class MainGestor {
 	}
 
 	public static void main(String[] args) {
-		MainGestor mg = new MainGestor("ColegioMaquia", 640, 360);
-
-		Constants.WINDOW_WIDTH = 640;
-		Constants.WINDOW_HEIGHT = 360;
+		MainGestor mg = new MainGestor("ColegioMaquia", Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 
 		Constants.WINDOW_X_CENTER = Constants.WINDOW_WIDTH / 2;
 		Constants.WINDOW_Y_CENTER = Constants.WINDOW_HEIGHT / 2;
@@ -71,7 +68,6 @@ public class MainGestor {
 			while (delta >= 1) {
 				update();
 				aps++;
-				Constants.APS = aps;
 				delta--;
 			}
 
@@ -81,13 +77,12 @@ public class MainGestor {
 			if (System.nanoTime() - counterReference > NS_PER_SECOND) {
 				setApsFps(aps, fps);
 				aps = 0;
-				Constants.APS = aps;
 				fps = 0;
 				counterReference = System.nanoTime();
 			}
 		}
 	}
-	
+
 	private void setApsFps(int aps, int fps) {
 		MainGestor.aps = aps;
 		MainGestor.fps = fps;
@@ -100,11 +95,11 @@ public class MainGestor {
 	private void draw() {
 		ds.draw(sg);
 	}
-	
+
 	public static int getAps() {
 		return aps;
 	}
-	
+
 	public static int getFps() {
 		return fps;
 	}

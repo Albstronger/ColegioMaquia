@@ -3,11 +3,12 @@ package main.statemachine.states.game;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import main.MainGestor;
 import main.control.ControlGestor;
 import main.entities.Player;
 import main.maps.Map;
 import main.statemachine.GameState;
-import main.MainGestor;
+import main.userinterface.HUD;
 
 public class GameGestor implements GameState {
 
@@ -22,7 +23,8 @@ public class GameGestor implements GameState {
 	public void draw(Graphics g) {
 		map.draw(g, (int) player.getX(), (int) player.getY());
 		player.draw(g);
-		if(ControlGestor.KEYBOARD.debug) {
+		HUD.drawResBar(g, player.getResistance());
+		if (ControlGestor.KEYBOARD.debug) {
 			g.setColor(Color.RED);
 			g.drawString("X = " + player.getX(), 10, 15);
 			g.drawString("Y = " + player.getY(), 10, 30);
