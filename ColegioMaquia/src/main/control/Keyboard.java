@@ -9,6 +9,8 @@ public final class Keyboard implements KeyListener {
 	public Key down = new Key();
 	public Key left = new Key();
 	public Key right = new Key();
+	public boolean running = false;
+	public boolean debug = false;
 
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
@@ -23,6 +25,9 @@ public final class Keyboard implements KeyListener {
 			break;
 		case KeyEvent.VK_D:
 			right.keyPressed();
+			break;
+		case KeyEvent.VK_CONTROL:
+			running = true;
 		}
 	}
 
@@ -39,9 +44,15 @@ public final class Keyboard implements KeyListener {
 			break;
 		case KeyEvent.VK_D:
 			right.keyReleased();
+			break;
+		case KeyEvent.VK_CONTROL:
+			running = false;
 		}
 	}
 
 	public void keyTyped(KeyEvent e) {
+		if(e.getKeyChar() == '3') {
+			debug = !debug;
+		}
 	}
 }

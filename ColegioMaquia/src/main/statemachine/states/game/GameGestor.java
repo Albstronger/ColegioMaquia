@@ -3,13 +3,15 @@ package main.statemachine.states.game;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import main.control.ControlGestor;
 import main.entities.Player;
 import main.maps.Map;
 import main.statemachine.GameState;
+import main.MainGestor;
 
 public class GameGestor implements GameState {
 
-	private Map map = new Map("/text/testMap.map");
+	private Map map = new Map("/text/testMap.txt");
 	private Player player = new Player(0, 0, map);
 
 	public void update() {
@@ -20,9 +22,13 @@ public class GameGestor implements GameState {
 	public void draw(Graphics g) {
 		map.draw(g, (int) player.getX(), (int) player.getY());
 		player.draw(g);
-		g.setColor(Color.RED);
-		g.drawString("X = " + player.getX(), 10, 15);
-		g.drawString("Y = " + player.getY(), 10, 30);
+		if(ControlGestor.KEYBOARD.debug) {
+			g.setColor(Color.RED);
+			g.drawString("X = " + player.getX(), 10, 15);
+			g.drawString("Y = " + player.getY(), 10, 30);
+			g.drawString("APS = " + MainGestor.getAps(), 10, 45);
+			g.drawString("FPS = " + MainGestor.getFps(), 10, 60);
+		}
 	}
 
 }

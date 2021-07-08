@@ -13,6 +13,8 @@ public class MainGestor {
 	private DrawingSurface ds;
 	private Window window;
 	private StateGestor sg;
+	
+	private static int aps, fps;
 
 	private MainGestor(final String title, final int width, final int height) {
 		this.title = title;
@@ -77,13 +79,18 @@ public class MainGestor {
 			fps++;
 
 			if (System.nanoTime() - counterReference > NS_PER_SECOND) {
-				System.out.println("FPS: " + fps + " || APS: " + aps);
+				setApsFps(aps, fps);
 				aps = 0;
 				Constants.APS = aps;
 				fps = 0;
 				counterReference = System.nanoTime();
 			}
 		}
+	}
+	
+	private void setApsFps(int aps, int fps) {
+		MainGestor.aps = aps;
+		MainGestor.fps = fps;
 	}
 
 	private void update() {
@@ -92,5 +99,13 @@ public class MainGestor {
 
 	private void draw() {
 		ds.draw(sg);
+	}
+	
+	public static int getAps() {
+		return aps;
+	}
+	
+	public static int getFps() {
+		return fps;
 	}
 }

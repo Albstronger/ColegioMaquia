@@ -154,6 +154,12 @@ public class Player {
 		moving = true;
 
 		changeDirection(xSpeed, ySpeed);
+		
+		if(ControlGestor.KEYBOARD.running) {
+			speed = 2;
+		}else {
+			speed = 1;
+		}
 
 		if (!outOfMap(xSpeed, ySpeed)) {
 			if (xSpeed == -1 && !leftColliding(xSpeed)) {
@@ -288,12 +294,14 @@ public class Player {
 		final int Xcenter = Constants.WINDOW_WIDTH / 2 - Constants.SPRITE_SIDE / 2;
 		final int Ycenter = Constants.WINDOW_HEIGHT / 2 - Constants.SPRITE_SIDE / 2;
 
-		g.setColor(Color.GREEN);
 		g.drawImage(actualImage, Xcenter, Ycenter, null);
-		g.drawRect(UP_LIMIT.x, UP_LIMIT.y, UP_LIMIT.width, UP_LIMIT.height);
-		g.drawRect(DOWN_LIMIT.x, DOWN_LIMIT.y, DOWN_LIMIT.width, DOWN_LIMIT.height);
-		g.drawRect(LEFT_LIMIT.x, LEFT_LIMIT.y, LEFT_LIMIT.width, LEFT_LIMIT.height);
-		g.drawRect(RIGHT_LIMIT.x, RIGHT_LIMIT.y, RIGHT_LIMIT.width, RIGHT_LIMIT.height);
+		if(ControlGestor.KEYBOARD.debug) {
+			g.setColor(Color.GREEN);
+			g.drawRect(UP_LIMIT.x, UP_LIMIT.y, UP_LIMIT.width, UP_LIMIT.height);
+			g.drawRect(DOWN_LIMIT.x, DOWN_LIMIT.y, DOWN_LIMIT.width, DOWN_LIMIT.height);
+			g.drawRect(LEFT_LIMIT.x, LEFT_LIMIT.y, LEFT_LIMIT.width, LEFT_LIMIT.height);
+			g.drawRect(RIGHT_LIMIT.x, RIGHT_LIMIT.y, RIGHT_LIMIT.width, RIGHT_LIMIT.height);
+		}
 	}
 
 	public double getX() {

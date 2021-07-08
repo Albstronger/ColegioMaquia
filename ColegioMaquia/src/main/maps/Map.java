@@ -1,5 +1,6 @@
 package main.maps;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.Constants;
+import main.control.ControlGestor;
 import main.sprites.Sprite;
 import main.sprites.SpriteSheet;
 import main.tools.ResourceLoader;
@@ -154,11 +156,13 @@ public class Map {
 
 				g.drawImage(image, xPoint, yPoint, null);
 
-//				g.setColor(Color.GREEN);
-//				for (int r = 0; r < collisionAreas.size(); r++) {
-//					Rectangle area = collisionAreas.get(r);
-//					g.drawRect(area.x, area.y, area.width, area.height);
-//				}
+				if(ControlGestor.KEYBOARD.debug) {
+					g.setColor(Color.GREEN);
+					for (int r = 0; r < collisionAreas.size(); r++) {
+						Rectangle area = collisionAreas.get(r);
+						g.drawRect(area.x, area.y, area.width, area.height);
+					}
+				}
 			}
 		}
 	}
