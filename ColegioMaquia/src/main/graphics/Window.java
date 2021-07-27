@@ -28,7 +28,7 @@ public class Window extends JFrame {
 		setResizable(false);
 		setLayout(new BorderLayout());
 		add(ds, BorderLayout.CENTER);
-//		setUndecorated(true);
+		setUndecorated(true);
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);

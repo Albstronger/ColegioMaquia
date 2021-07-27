@@ -7,14 +7,14 @@ import main.statemachine.StateGestor;
 public class MainGestor {
 	private boolean running = false;
 	private String title;
-	private int width;
-	private int height;
+	private int width, height;
 
 	private DrawingSurface ds;
+	@SuppressWarnings("unused")
 	private Window window;
 	private StateGestor sg;
 
-	private static int aps, fps;
+	private static int tps, fps;
 
 	private MainGestor(final String title, final int width, final int height) {
 		this.title = title;
@@ -23,10 +23,7 @@ public class MainGestor {
 	}
 
 	public static void main(String[] args) {
-		MainGestor mg = new MainGestor("ColegioMaquia", Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
-
-		Constants.WINDOW_X_CENTER = Constants.WINDOW_WIDTH / 2;
-		Constants.WINDOW_Y_CENTER = Constants.WINDOW_HEIGHT / 2;
+		MainGestor mg = new MainGestor("ColegioMaquia", Constants.FULLSCREEN_WIDTH, Constants.FULLSCREEN_HEIGHT);
 
 		mg.startGame();
 		mg.startMainLoop();
@@ -44,12 +41,12 @@ public class MainGestor {
 	}
 
 	private void startMainLoop() {
-		int aps = 0;
-		int fps = 0;
+		int accumulatedTimes = 0;
+		int accumulatedFrames = 0;
 
 		final int NS_PER_SECOND = 1000000000;
-		final byte TARGET_APS = 60;
-		final double NS_PER_UPDATE = NS_PER_SECOND / TARGET_APS;
+		final byte TARGET_TPS = 60;
+		final double NS_PER_UPDATE = NS_PER_SECOND / TARGET_TPS;
 
 		long updateReference = System.nanoTime();
 		long counterReference = System.nanoTime();
@@ -58,34 +55,30 @@ public class MainGestor {
 		double delta = 0;
 
 		while (running) {
-			final long inicioBucle = System.nanoTime();
+			final long loopStart = System.nanoTime();
 
-			timeElapsed = inicioBucle - updateReference;
-			updateReference = inicioBucle;
+			timeElapsed = loopStart - updateReference;
+			updateReference = loopStart;
 
 			delta += timeElapsed / NS_PER_UPDATE;
 
 			while (delta >= 1) {
 				update();
-				aps++;
+				accumulatedTimes++;
 				delta--;
 			}
 
 			draw();
-			fps++;
+			accumulatedFrames++;
 
 			if (System.nanoTime() - counterReference > NS_PER_SECOND) {
-				setApsFps(aps, fps);
-				aps = 0;
-				fps = 0;
+				MainGestor.tps = accumulatedTimes;
+				MainGestor.fps = accumulatedFrames;
+				accumulatedTimes = 0;
+				accumulatedFrames = 0;
 				counterReference = System.nanoTime();
 			}
 		}
-	}
-
-	private void setApsFps(int aps, int fps) {
-		MainGestor.aps = aps;
-		MainGestor.fps = fps;
 	}
 
 	private void update() {
@@ -97,7 +90,7 @@ public class MainGestor {
 	}
 
 	public static int getAps() {
-		return aps;
+		return tps;
 	}
 
 	public static int getFps() {

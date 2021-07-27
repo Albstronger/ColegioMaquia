@@ -3,6 +3,7 @@ package main.statemachine.states.game;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import main.Constants;
 import main.MainGestor;
 import main.control.ControlGestor;
 import main.entities.Player;
@@ -30,6 +31,9 @@ public class GameGestor implements GameState {
 			g.drawString("Y = " + player.getY(), 10, 30);
 			g.drawString("APS = " + MainGestor.getAps(), 10, 45);
 			g.drawString("FPS = " + MainGestor.getFps(), 10, 60);
+			g.drawString("RESISTANCE = " + player.getResistance(), 10, 75);
+			g.drawString("HORIZONTAL SCALING FACTOR = " + Constants.HORIZONTAL_SCALING_FACTOR, 10, 90);
+			g.drawString("VERTICAL SCALING FACTOR = " + Constants.VERTICAL_SCALING_FACTOR, 10, 105);
 		}
 	}
 

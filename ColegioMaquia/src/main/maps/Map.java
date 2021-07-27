@@ -26,8 +26,8 @@ public class Map {
 
 	public List<Rectangle> collisionAreas = new ArrayList<Rectangle>();
 
-	private final int X_MARGIN = Constants.WINDOW_WIDTH / 2 - Constants.SPRITE_SIDE / 2;
-	private final int Y_MARGIN = Constants.WINDOW_HEIGHT / 2 - Constants.SPRITE_SIDE / 2;
+	private final int X_MARGIN = Constants.GAME_WIDTH / 2 - Constants.SPRITE_SIDE / 2;
+	private final int Y_MARGIN = Constants.GAME_HEIGHT / 2 - Constants.SPRITE_SIDE / 2;
 
 	private final int[] sprites;
 

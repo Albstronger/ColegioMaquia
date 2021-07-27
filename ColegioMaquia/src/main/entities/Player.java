@@ -39,10 +39,12 @@ public class Player {
 
 	private int animation;
 	private int state;
-
-	private int resistance = 600;
+	
+	public static final int MAX_RESISTANCE = 600;
+	public static final int MAX_RECUPERATION = 200;
+	
+	private int resistance = MAX_RESISTANCE;
 	private int recuperation = 0;
-	private final int MAX_RECUPERATION = 200;
 	private boolean recovered = true;
 
 	private Map map;
@@ -317,8 +319,8 @@ public class Player {
 	}
 
 	public void draw(Graphics g) {
-		final int Xcenter = Constants.WINDOW_WIDTH / 2 - Constants.SPRITE_SIDE / 2;
-		final int Ycenter = Constants.WINDOW_HEIGHT / 2 - Constants.SPRITE_SIDE / 2;
+		final int Xcenter = Constants.GAME_WIDTH / 2 - Constants.SPRITE_SIDE / 2;
+		final int Ycenter = Constants.GAME_HEIGHT / 2 - Constants.SPRITE_SIDE / 2;
 
 		g.drawImage(actualImage, Xcenter, Ycenter, null);
 		if (ControlGestor.KEYBOARD.debug) {
@@ -327,8 +329,6 @@ public class Player {
 			g.drawRect(DOWN_LIMIT.x, DOWN_LIMIT.y, DOWN_LIMIT.width, DOWN_LIMIT.height);
 			g.drawRect(LEFT_LIMIT.x, LEFT_LIMIT.y, LEFT_LIMIT.width, LEFT_LIMIT.height);
 			g.drawRect(RIGHT_LIMIT.x, RIGHT_LIMIT.y, RIGHT_LIMIT.width, RIGHT_LIMIT.height);
-			g.setColor(Color.RED);
-			g.drawString("RESISTANCE = " + resistance, 10, 75);
 		}
 	}
 

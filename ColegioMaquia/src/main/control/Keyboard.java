@@ -28,6 +28,12 @@ public final class Keyboard implements KeyListener {
 			break;
 		case KeyEvent.VK_CONTROL:
 			running = true;
+			break;
+		case KeyEvent.VK_F3:
+			debug = !debug;
+			break;
+		case KeyEvent.VK_ESCAPE:
+			System.exit(0);
 		}
 	}
 
@@ -47,12 +53,9 @@ public final class Keyboard implements KeyListener {
 			break;
 		case KeyEvent.VK_CONTROL:
 			running = false;
+			break;
 		}
 	}
 
-	public void keyTyped(KeyEvent e) {
-		if(e.getKeyChar() == '3') {
-			debug = !debug;
-		}
-	}
+	public void keyTyped(KeyEvent e) {}
 }

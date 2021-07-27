@@ -3,10 +3,11 @@ package main.graphics;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 
+import main.Constants;
 import main.control.ControlGestor;
 import main.statemachine.StateGestor;
 
@@ -20,7 +21,7 @@ public class DrawingSurface extends Canvas {
 	public DrawingSurface(final int width, final int height) {
 		this.width = width;
 		this.height = height;
-
+		
 		setIgnoreRepaint(true);
 		setCursor(ControlGestor.MOUSE.getCursor());
 		setPreferredSize(new Dimension(width, height));
@@ -33,14 +34,18 @@ public class DrawingSurface extends Canvas {
 		BufferStrategy buffer = getBufferStrategy();
 
 		if (buffer == null) {
-			createBufferStrategy(3);
+			createBufferStrategy(4);
 			return;
 		}
 
-		Graphics g = buffer.getDrawGraphics();
+		Graphics2D g = (Graphics2D) buffer.getDrawGraphics();
 
 		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, width, height);
+		g.fillRect(0, 0, Constants.FULLSCREEN_WIDTH, Constants.FULLSCREEN_HEIGHT);
+		
+		if(Constants.HORIZONTAL_SCALING_FACTOR != 1.0 || Constants.VERTICAL_SCALING_FACTOR != 1.0) {
+			g.scale(Constants.HORIZONTAL_SCALING_FACTOR, Constants.VERTICAL_SCALING_FACTOR);
+		}
 
 		sg.draw(g);
 
