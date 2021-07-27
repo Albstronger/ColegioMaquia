@@ -34,6 +34,8 @@ public class GameGestor implements GameState {
 			g.drawString("RESISTANCE = " + player.getResistance(), 10, 75);
 			g.drawString("HORIZONTAL SCALING FACTOR = " + Constants.HORIZONTAL_SCALING_FACTOR, 10, 90);
 			g.drawString("VERTICAL SCALING FACTOR = " + Constants.VERTICAL_SCALING_FACTOR, 10, 105);
+			g.drawString("MOUSE X = " + ControlGestor.MOUSE.getPosition().getX(), 10, 120);
+			g.drawString("MOUSE Y = " + ControlGestor.MOUSE.getPosition().getY(), 10, 135);
 		}
 	}
 

@@ -26,6 +26,7 @@ public class DrawingSurface extends Canvas {
 		setCursor(ControlGestor.MOUSE.getCursor());
 		setPreferredSize(new Dimension(width, height));
 		addKeyListener(ControlGestor.KEYBOARD);
+		addMouseListener(ControlGestor.MOUSE);
 		setFocusable(true);
 		requestFocus();
 	}
